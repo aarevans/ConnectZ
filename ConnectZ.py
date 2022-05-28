@@ -35,6 +35,12 @@ data = data.split("\n")
 #Assigning board config values, p1 turns and p2 turns to appropriate structures.
 p1_moves = []
 p2_moves = []
+
+#catches invalid files with board config but no moves.
+if len(data) == 1:
+    print(8)
+    sys.exit()
+
 for x in range(len(data)):
     if x == 0:
         board_config = data[x]
@@ -56,12 +62,16 @@ game_board = board.CreateBoard()
 #when there are no turns left for either player the loop finishes and game ends.
 current_turn = 0
 while len(p1_moves) > 0 or len(p2_moves) > 0:
-    if current_turn % 2 == 0:
-        game_board = board.UpdateBoard(int(p1_moves[0]),game_board,"p1")
-        p1_moves.remove(p1_moves[0])
+    if board.LegalMoveCheck() == True:
+        if current_turn % 2 == 0:
+            game_board = board.UpdateBoard(int(p1_moves[0]),game_board,"p1")
+            p1_moves.remove(p1_moves[0])
+        else:
+            game_board = board.UpdateBoard(int(p2_moves[0]),game_board,"p2")
+            p2_moves.remove(p2_moves[0])
+        current_turn += 1
     else:
-        game_board = board.UpdateBoard(int(p2_moves[0]),game_board,"p2")
-        p2_moves.remove(p2_moves[0])
-    current_turn += 1
+        print("invalid")
+        
 
 board.DisplayBoard(game_board)

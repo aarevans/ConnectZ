@@ -1,7 +1,13 @@
+import sys
 class Board:
     #Constructor
     def __init__(this,board_config):
-        this.columns, this.rows, this.target = board_config.split(" ")
+        #catches files with invalid format
+        try:
+            this.columns, this.rows, this.target = board_config.split(" ")
+        except ValueError:
+            print(8)
+            sys.exit()
 
     def CreateBoard(this):
         board = [[0] * int(this.columns) for i in range(int(this.rows))]
@@ -17,8 +23,8 @@ class Board:
         #needs implementing
         return True
 
-    #return True of False value if impossible game scenario or not.
-    def ImpossibleCheck(this):
+    #return True of False value if incomplete/impossible game scenario or not.
+    def Valid(this):
         pass
 
     #updates game board based of player move, fills in the table from the bottom.
