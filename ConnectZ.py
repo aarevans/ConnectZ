@@ -55,8 +55,6 @@ game_board = board.CreateBoard()
 #turn based system using MOD to see if its p1 or p2 turn and then removing moves once used from move lists.
 #when there are no turns left for either player the loop finishes and game ends.
 current_turn = 0
-for line in game_board:
-    print(line)
 while len(p1_moves) > 0 or len(p2_moves) > 0:
     if current_turn % 2 == 0:
         game_board = board.UpdateBoard(int(p1_moves[0]),game_board,"p1")
@@ -66,5 +64,4 @@ while len(p1_moves) > 0 or len(p2_moves) > 0:
         p2_moves.remove(p2_moves[0])
     current_turn += 1
 
-for line in game_board:
-    print(line)
+board.DisplayBoard(game_board)
