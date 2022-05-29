@@ -22,7 +22,7 @@ described in detail below.
 
 The codes are defined as follows:
 
-0	     Draw	This happens when every possible space in the frame was filled with a counter, but neither player achieved a line of the required length.![image](https://user-images.githubusercontent.com/102594470/170803061-59804f0a-4e52-4193-a85d-0fac7b887893.png)
+0	     Draw	This happens when every possible space in the frame was filled with a counter, but neither player achieved a line of the required length.!
 
 1	     Win for player 1	The first player achieved a line of the required length.
 
