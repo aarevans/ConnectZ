@@ -24,8 +24,13 @@ args=parser.parse_args()
 
 # ***Start of handling test data code***
 #rconcatenate the file extension to the file name and then open in read mode.
-file = open((args.data+".txt"),"r")
-
+#exception handling catches if file cannot be found
+try:
+    file = open((args.data+".txt"),"r")
+except IOError:
+    print(9)
+    sys.exit()
+    
 #reading all test data into a string.
 data = file.read()
 
@@ -58,20 +63,46 @@ board = Board(board_config)
 #game board using the board_config dimensions.
 game_board = board.CreateBoard()
 
+
 #turn based system using MOD to see if its p1 or p2 turn and then removing moves once used from move lists.
 #when there are no turns left for either player the loop finishes and game ends.
 current_turn = 0
+turn_limit = int(board.columns) * int(board.rows)
 while len(p1_moves) > 0 or len(p2_moves) > 0:
-    if board.LegalMoveCheck() == True:
-        if current_turn % 2 == 0:
+    if current_turn % 2 == 0:
+        if board.LegalColumn(p1_moves[0]) == True and board.LegalRow(game_board,p1_moves[0]) == True:
             game_board = board.UpdateBoard(int(p1_moves[0]),game_board,"p1")
             p1_moves.remove(p1_moves[0])
-        else:
+            if board.WinCheck(game_board) == True and len(p2_moves)==0 and len(p1_moves)==0:
+                print(1)
+                sys.exit()
+            elif board.WinCheck(game_board) == True:
+                print(4)
+                sys.exit()
+            
+    elif current_turn % 2 == 1:
+        if board.LegalColumn(p2_moves[0]) == True and board.LegalRow(game_board,p2_moves[0]) == True:
             game_board = board.UpdateBoard(int(p2_moves[0]),game_board,"p2")
             p2_moves.remove(p2_moves[0])
-        current_turn += 1
-    else:
-        print("invalid")
+            if board.WinCheck(game_board) == True and len(p2_moves)==0 and len(p1_moves)==0:
+                print(2)
+                sys.exit()
+            elif board.WinCheck(game_board) == True:
+                print(4)
+                sys.exit()
+    current_turn += 1
+
+    #handles draws
+    if current_turn == turn_limit:
+        print(0)
+        sys.exit()
+
+        #handles incomplete scenarios
+        #elif current_turn < turn_limit and board.WinCheck(game_board)==False:
+         #   print(3)
+          #  sys.exit()
+    
         
 
 board.DisplayBoard(game_board)
+#print(board.WinCheck(game_board))
