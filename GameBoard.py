@@ -14,9 +14,6 @@ class Board:
             print(7)
             sys.exit()
         
-        
-
-
     #creates a new board 2dlist using the board_config values
     def CreateBoard(this):
         board = [[0] * int(this.columns) for i in range(int(this.rows))]
@@ -29,16 +26,19 @@ class Board:
 
 
     #return True or False value if move is legal or not.
-    def LegalRow(this,board,move):
+    def FullColumn(this,board,move):
         for count in range (len(board[0])-1):
             if board[count][int(move)-1] == 0:
-                #print(board[count][int(move)-1])
                 return True
+            else:
+                print(5)
+                sys.exit()
 
     def LegalColumn(this,move):
-        if move > this.columns:
+        if int(move) > int(this.columns):
             return False
-        return True
+        else:
+            return True
         
     #return True of False value if incomplete/impossible game scenario or not.
     def Impossible(this):
