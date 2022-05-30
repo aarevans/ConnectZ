@@ -60,37 +60,95 @@ class Board:
 
     #method to return true or false depending on whether a win condition has been met.
     def WinCheck(this,board):
+        #to begin the board needs to be analsed
+        max_col = len(board[0])
+        max_row = len(board)
+        #empty 2dlists created to store all possible columns, rows, forward diagonals and backwards diagonals
+        cols = [[] for _ in range(max_col)]
+        rows = [[] for _ in range(max_row)]
+        fdiag = [[] for _ in range(max_row + max_col - 1)]
+        bdiag = [[] for _ in range(len(fdiag))]
+        min_bdiag =- max_row + 1
+
+        #appropriate values appended to the above made 2d lists
+        for x in range(max_col):
+            for y in range(max_row):
+                cols[x].append(board[y][x])
+                rows[y].append(board[y][x])
+                fdiag[x+y].append(board[y][x])
+                bdiag[x-y-min_bdiag].append(board[y][x])
+
         p1_point_count = 0
-        p2_point_count = 0
-        
-        #checks for win condition along rows.
-        while True:
-            for count in range(len(board[0])):
-                for item in board[count]:
-                    if item == "p1":
+        p2_point_count = 0        
+
+        while True: 
+            #Columns analsed for win conditions.
+            for col in cols:
+                for element in col:
+                    if element == "p1":
                         p1_point_count += 1
                         if p1_point_count == int(this.target):
-                            return True
-                    elif item == "p2":
-                        p2_point_count += 1
-                        if p2_point_count == int(this.target):
-                            return True
+                            return True   
                 p1_point_count = 0
-                p2_point_count = 0
             
-            #checks for win condition in columns
-            for count in range (len(board[0])):
-                for count2 in range(len(board)):
-                    if board[count2][count] == "p1":
+            for col in cols:
+                for element in col:
+                    if element == "p2":
+                        p2_point_count += 1
+                        if p2_point_count == int(this.target):
+                            return True    
+                p2_point_count = 0
+           
+            #Rows analsed for win conditions.
+            for row in rows:
+                for element in row:
+                    if element == "p1":
                         p1_point_count += 1
                         if p1_point_count == int(this.target):
                             return True
-                    elif board[count2][count] == "p2":
+                p1_point_count = 0
+            
+            for row in rows:
+                for element in row:
+                    if element == "p2":
                         p2_point_count += 1
                         if p2_point_count == int(this.target):
                             return True
-                p1_point_count = 0
                 p2_point_count = 0
 
-            #return false value if no win condition found
+            #forward diagonals analsed for win conditions.
+            for diag in fdiag:
+                for element in diag:
+                    if element == "p1":
+                        p1_point_count += 1
+                        if p1_point_count == int(this.target):
+                            return True
+                p1_point_count = 0
+
+            for diag in fdiag:
+                for element in diag:
+                    if element == "p2":
+                        p2_point_count += 1
+                        if p2_point_count == int(this.target):
+                            return True
+                p2_point_count = 0
+
+            #backwards diagonals analsed for win conditions.
+            for diag in bdiag:
+                for element in diag:
+                    if element == "p1":
+                        p1_point_count += 1
+                        if p1_point_count == int(this.target):
+                            return True
+                p1_point_count = 0
+
+            for diag in bdiag:
+                for element in diag:
+                    if element == "p2":
+                        p2_point_count += 1
+                        if p2_point_count == int(this.target):
+                            return True
+                p2_point_count = 0
+            
+            #False value returned if no win condition found.
             return False
